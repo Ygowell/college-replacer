@@ -21,8 +21,10 @@ class UserViewModel(private val userDao: UserDao) : ViewModel() {
 
     val allUserNames = _userNames
 
-    fun saveUser(name: String) {
-        val user = User(UUID.randomUUID().toString(), name, 20)
+    var inputText = MutableLiveData<String>()
+
+    fun saveUser() {
+        val user = User(UUID.randomUUID().toString(), inputText.value.toString(), 20)
         GlobalScope.launch(Dispatchers.IO) {
             userDao.insertUser(user)
         }

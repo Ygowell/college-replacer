@@ -10,7 +10,6 @@ import com.halo.collegereplacer.databinding.ActivityMainBinding
 import com.halo.collegereplacer.db.CRDatabase
 import com.halo.collegereplacer.ui.home.viewmodel.UserViewModel
 import com.halo.collegereplacer.ui.home.viewmodel.UserViewModelFactory
-import kotlinx.android.synthetic.main.activity_main.*
 
 class MainActivity : AppCompatActivity() {
 
@@ -33,24 +32,8 @@ class MainActivity : AppCompatActivity() {
             .get(UserViewModel::class.java)
 
 
-        btn_add.setOnClickListener {
-            addUser()
-        }
-
-        btn_show.setOnClickListener {
-            showUsers()
-        }
-    }
-
-    private fun addUser() {
-        val inputText = editText.text.toString()
-
-        userViewModel.saveUser(inputText)
-
-
-    }
-
-    private fun showUsers() {
-        userViewModel.getAllUsers()
+        binding.userViewModel = userViewModel
+        // Don't forget set lifecycleOwner(类似添加Observable）
+        binding.lifecycleOwner = this
     }
 }

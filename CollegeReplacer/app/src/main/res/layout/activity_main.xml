@@ -2,7 +2,9 @@
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
         xmlns:tools="http://schemas.android.com/tools">
     <data>
-        <variable name="userViewModel" type="com.halo.collegereplacer.ui.home.viewmodel.UserViewModel"/>
+        <variable
+                name="userViewModel"
+                type="com.halo.collegereplacer.ui.home.viewmodel.UserViewModel"/>
     </data>
     <LinearLayout
             android:layout_width="match_parent"
@@ -15,7 +17,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:inputType="textPersonName"
-                android:text="JAM"
+                android:text="@={userViewModel.inputText}"
                 android:ems="10"
                 android:id="@+id/editText"/>
         <LinearLayout android:layout_width="match_parent"
@@ -26,12 +28,14 @@
                     android:layout_width="0dp"
                     android:layout_weight="1"
                     android:layout_height="wrap_content"
-                    android:id="@+id/btn_add"/>
+                    android:id="@+id/btn_add"
+                    android:onClick="@{() -> userViewModel.saveUser()}"/>
             <Button
                     android:text="Show"
                     android:layout_width="0dp"
                     android:layout_weight="1"
                     android:layout_height="wrap_content"
+                    android:onClick="@{() -> userViewModel.getAllUsers()}"
                     android:id="@+id/btn_show"/>
         </LinearLayout>
 
@@ -40,6 +44,6 @@
                 android:id="@+id/tv_info"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="@{allUserNames}"/>
+                android:text="@{userViewModel.allUserNames}"/>
     </LinearLayout>
 </layout>
