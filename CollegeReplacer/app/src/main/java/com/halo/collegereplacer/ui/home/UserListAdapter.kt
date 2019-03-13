@@ -8,7 +8,6 @@ import com.halo.collegereplacer.R
 import androidx.recyclerview.widget.RecyclerView
 import com.halo.collegereplacer.databinding.UserListItemBinding
 import com.halo.collegereplacer.db.User
-import com.halo.collegereplacer.ui.home.viewmodel.UserViewModel
 
 class UserListAdapter: RecyclerView.Adapter<UserListAdapter.UserViewHolder>() {
 
@@ -35,7 +34,6 @@ class UserListAdapter: RecyclerView.Adapter<UserListAdapter.UserViewHolder>() {
             itemView,
             false
         )) : RecyclerView.ViewHolder(binding.root) {
-
         fun bind(user: User) {
             binding.user = user
         }
