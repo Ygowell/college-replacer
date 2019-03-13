@@ -17,9 +17,16 @@ import java.util.*
  */
 class UserViewModel(private val userDao: UserDao) : ViewModel() {
 
+    private val userList = mutableListOf<User>()
+
+    private val _users = MutableLiveData<List<User>>().apply { value = userList }
+
     private val _userNames = MutableLiveData<String>()
 
     val allUserNames = _userNames
+
+    val users: MutableLiveData<List<User>>
+        get() = _users
 
     var inputText = MutableLiveData<String>()
 
@@ -34,11 +41,12 @@ class UserViewModel(private val userDao: UserDao) : ViewModel() {
         GlobalScope.launch(Dispatchers.IO) {
             val users = userDao.getAllUsers()
             val userNamesBuilder = StringBuilder()
-                users.map {
-                    userNamesBuilder.append("${it.name}, ")
+            users.map {
+                userNamesBuilder.append("${it.name}, ")
             }
 
             withContext(Dispatchers.Main) {
+                userList.addAll(users)
                 _userNames.value = userNamesBuilder.toString()
             }
         }

@@ -4,12 +4,13 @@ import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.ViewModelProviders
-import androidx.room.Room
+import androidx.recyclerview.widget.DividerItemDecoration
+import androidx.recyclerview.widget.LinearLayoutManager
 import com.halo.collegereplacer.R
+import com.halo.collegereplacer.Injection
 import com.halo.collegereplacer.databinding.ActivityMainBinding
-import com.halo.collegereplacer.db.CRDatabase
 import com.halo.collegereplacer.ui.home.viewmodel.UserViewModel
-import com.halo.collegereplacer.ui.home.viewmodel.UserViewModelFactory
+import kotlinx.android.synthetic.main.activity_main.*
 
 class MainActivity : AppCompatActivity() {
 
@@ -22,18 +23,20 @@ class MainActivity : AppCompatActivity() {
             R.layout.activity_main
         )
 
-        val userDao = Room.databaseBuilder(
-            this,
-            CRDatabase::class.java, "college_replace.db"
-        ).build().userDao()
-
         userViewModel = ViewModelProviders
-            .of(this, UserViewModelFactory(userDao))
+            .of(this, Injection.providerUserViewModelFactory(this))
             .get(UserViewModel::class.java)
 
-
-        binding.userViewModel = userViewModel
         // Don't forget set lifecycleOwner(类似添加Observable）
         binding.lifecycleOwner = this
+
+        val layoutManager = LinearLayoutManager(this)
+
+        rv_user_list.layoutManager = layoutManager
+        rv_user_list.hasFixedSize()
+        rv_user_list.adapter = UserListAdapter()
+        rv_user_list.addItemDecoration(DividerItemDecoration(this, layoutManager.orientation))
+
+        binding.userViewModel = userViewModel
     }
 }
