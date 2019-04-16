@@ -4,6 +4,7 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.halo.collegereplacer.db.User
 import com.halo.collegereplacer.db.UserDao
+import io.reactivex.schedulers.Schedulers
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
@@ -38,17 +39,20 @@ class UserViewModel(private val userDao: UserDao) : ViewModel() {
     }
 
     fun getAllUsers() {
-        GlobalScope.launch(Dispatchers.IO) {
-            val users = userDao.getAllUsers()
-            val userNamesBuilder = StringBuilder()
-            users.map {
-                userNamesBuilder.append("${it.name}, ")
-            }
+        userDao.getAllUsers()
+            .subscribeOn(Schedulers.io())
+            .subscribe(
+                {
+                    val userNamesBuilder = StringBuilder()
+                    it.map { user ->
+                        userNamesBuilder.append("${user.name}, ")
+                    }
+                    userList.addAll(it)
+                    _userNames.value = userNamesBuilder.toString()
+                },
+                {
 
-            withContext(Dispatchers.Main) {
-                userList.addAll(users)
-                _userNames.value = userNamesBuilder.toString()
-            }
-        }
+                }
+            )
     }
 }

@@ -1,3 +1,4 @@
 <resources>
     <string name="app_name">CollegeReplacer</string>
+    <string name="language">Language: %s</string>
 </resources>

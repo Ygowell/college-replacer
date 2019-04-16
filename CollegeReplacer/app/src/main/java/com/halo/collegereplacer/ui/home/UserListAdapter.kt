@@ -4,10 +4,12 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.databinding.BindingAdapter
 import androidx.databinding.DataBindingUtil
+import androidx.recyclerview.widget.DiffUtil
 import com.halo.collegereplacer.R
 import androidx.recyclerview.widget.RecyclerView
 import com.halo.collegereplacer.databinding.UserListItemBinding
 import com.halo.collegereplacer.db.User
+import com.halo.collegereplacer.model.Repo
 
 class UserListAdapter: RecyclerView.Adapter<UserListAdapter.UserViewHolder>() {
 

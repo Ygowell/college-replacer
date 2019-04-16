@@ -10,6 +10,7 @@ import com.halo.collegereplacer.R
 import com.halo.collegereplacer.Injection
 import com.halo.collegereplacer.databinding.ActivityMainBinding
 import com.halo.collegereplacer.ui.home.viewmodel.UserViewModel
+import com.halo.collegereplacer.utils.PageUtils
 import kotlinx.android.synthetic.main.activity_main.*
 
 class MainActivity : AppCompatActivity() {
@@ -18,7 +19,7 @@ class MainActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        val binding : ActivityMainBinding = DataBindingUtil.setContentView(
+        val binding: ActivityMainBinding = DataBindingUtil.setContentView(
             this,
             R.layout.activity_main
         )
@@ -38,5 +39,9 @@ class MainActivity : AppCompatActivity() {
         rv_user_list.addItemDecoration(DividerItemDecoration(this, layoutManager.orientation))
 
         binding.userViewModel = userViewModel
+
+        btn_go_search.setOnClickListener {
+            PageUtils.openRepoList(this)
+        }
     }
 }
